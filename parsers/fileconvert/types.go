@@ -19,11 +19,11 @@ const (
 
 // Format represents a file format that can be converted.
 type Format struct {
-	Extension  string         // e.g., ".png", ".jpg"
-	MimeType   string         // e.g., "image/png"
+	Extension  string // e.g., ".png", ".jpg"
+	MimeType   string // e.g., "image/png"
 	Category   FormatCategory
-	Name       string         // Human-readable name
-	CanConvert []string       // Extensions this format can convert to
+	Name       string   // Human-readable name
+	CanConvert []string // Extensions this format can convert to
 }
 
 // ConversionRequest describes a file conversion operation.
@@ -168,7 +168,7 @@ func DetectFormatFromFilename(filename string) string {
 	if lastDot == -1 || lastDot == len(filename)-1 {
 		return ""
 	}
-	
+
 	ext := filename[lastDot:]
 	return normalizeExt(ext)
 }

@@ -135,11 +135,9 @@ func (c *imageConverter) encode(img image.Image, format string, quality int) ([]
 		mimeType = "image/tiff"
 
 	case ".webp":
-		// WebP encoding requires external library or use JPEG as fallback
-		// For now, use JPEG as fallback
+		// WebP encoding requires external library; fall back to JPEG
 		err = jpeg.Encode(&buf, img, &jpeg.Options{Quality: quality})
 		mimeType = "image/jpeg"
-		format = ".jpg"
 
 	default:
 		return nil, "", fmt.Errorf("unsupported output format: %s", format)

@@ -17,7 +17,7 @@ func findBinary(name string) (string, bool) {
 	if runtime.GOOS == "windows" && filepath.Ext(name) != ".exe" {
 		name = name + ".exe"
 	}
-	
+
 	// Try bundled binary relative to executable first (for compiled binary)
 	execPath, err := os.Executable()
 	if err == nil {
@@ -27,7 +27,7 @@ func findBinary(name string) (string, bool) {
 			return bundledPath, true
 		}
 	}
-	
+
 	// Try bundled binary relative to current working directory (for go run)
 	cwd, err := os.Getwd()
 	if err == nil {
@@ -36,13 +36,13 @@ func findBinary(name string) (string, bool) {
 			return cwdBinPath, true
 		}
 	}
-	
+
 	// Fall back to system PATH
 	systemPath, err := exec.LookPath(name)
 	if err == nil {
 		return systemPath, true
 	}
-	
+
 	return "", false
 }
 

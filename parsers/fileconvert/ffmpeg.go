@@ -56,12 +56,12 @@ func (c *ffmpegConverter) Convert(req ConversionRequest) (*ConversionResult, err
 
 	// Determine output format for FFmpeg
 	outputFormat := to[1:] // Remove leading dot
-	
+
 	// Build FFmpeg command
 	// Input from stdin (pipe:0), output to stdout (pipe:1)
 	args := []string{
-		"-i", "pipe:0",        // Read from stdin
-		"-f", outputFormat,    // Output format
+		"-i", "pipe:0", // Read from stdin
+		"-f", outputFormat, // Output format
 	}
 
 	// Add quality/codec settings based on output format
@@ -94,7 +94,7 @@ func (c *ffmpegConverter) Convert(req ConversionRequest) (*ConversionResult, err
 	ffmpegPath, _ := findBinary("ffmpeg")
 	cmd := exec.Command(ffmpegPath, args...)
 	cmd.Stdin = bytes.NewReader(req.Data)
-	
+
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
@@ -111,8 +111,6 @@ func (c *ffmpegConverter) Convert(req ConversionRequest) (*ConversionResult, err
 		MimeType: mimeType,
 	}, nil
 }
-
-
 
 // getAudioQuality converts quality (0-100) to FFmpeg audio quality (0-9, lower is better).
 func getAudioQuality(quality int) int {

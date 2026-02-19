@@ -39,7 +39,7 @@ func (c *documentConverter) SupportedFormats() []Format {
 func (c *documentConverter) CanConvert(from, to string) bool {
 	from = normalizeExt(from)
 	to = normalizeExt(to)
-	
+
 	// Check if Pandoc is available (bundled or system)
 	if !isCommandAvailable("pandoc") {
 		return false
@@ -54,10 +54,10 @@ func (c *documentConverter) CanConvert(from, to string) bool {
 	if to == ".pdf" {
 		return false
 	}
-	
+
 	supportedFormats := c.SupportedFormats()
 	hasFrom, hasTo := false, false
-	
+
 	for _, f := range supportedFormats {
 		if f.Extension == from {
 			hasFrom = true
@@ -66,41 +66,41 @@ func (c *documentConverter) CanConvert(from, to string) bool {
 			hasTo = true
 		}
 	}
-	
+
 	return hasFrom && hasTo && from != to
 }
 
 func (c *documentConverter) Convert(req ConversionRequest) (*ConversionResult, error) {
 	from := normalizeExt(req.FromFormat)
 	to := normalizeExt(req.ToFormat)
-	
+
 	// Map extensions to Pandoc format names (input vs output differ for some formats)
 	fromFormat := getPandocInputFormat(from)
 	toFormat := getPandocOutputFormat(to)
-	
+
 	// Build Pandoc command
 	args := []string{
 		"-f", fromFormat,
 		"-t", toFormat,
 		"-o", "-", // Write to stdout
 	}
-	
+
 	// Execute Pandoc with data piped through stdin/stdout
 	pandocPath, _ := findBinary("pandoc")
 	cmd := exec.Command(pandocPath, args...)
 	cmd.Stdin = bytes.NewReader(req.Data)
-	
+
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	
+
 	if err := cmd.Run(); err != nil {
 		return nil, fmt.Errorf("pandoc conversion failed: %w (stderr: %s)", err, stderr.String())
 	}
-	
+
 	// Determine MIME type
 	mimeType := getDocumentMimeType(to)
-	
+
 	return &ConversionResult{
 		Data:     stdout.Bytes(),
 		MimeType: mimeType,
@@ -171,11 +171,9 @@ func getDocumentMimeType(ext string) string {
 		".tsv":  "text/tab-separated-values",
 		".xml":  "application/xml",
 	}
-	
+
 	if mime, ok := mimeTypes[ext]; ok {
 		return mime
 	}
 	return "application/octet-stream"
 }
-
-

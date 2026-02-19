@@ -723,7 +723,7 @@ func normalizeBasePath(s string) string {
 func handleBankTemplates(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "public, max-age=3600")
-	
+
 	templates := bankparser.GetTemplateList()
 	json.NewEncoder(w).Encode(templates)
 }

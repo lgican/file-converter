@@ -33,9 +33,9 @@ func (c *converter) Extensions() []string {
 		".mkv", ".mp4", ".webm", ".avi", ".mov", ".wmv", ".mpg", ".mpeg",
 		".flv", ".f4v", ".vob", ".m4v", ".3gp", ".3g2", ".mxf", ".ogv",
 		".ts", ".mts", ".m2ts", ".h264", ".divx", ".swf", ".amv", ".asf",
-		// Documents
-		".docx", ".doc", ".odt", ".rtf", ".txt", ".md", ".html", ".epub",
-		".pdf", ".tex", ".rst", ".json", ".csv", ".tsv", ".xml",
+		// Documents & Spreadsheets
+		".docx", ".doc", ".pptx", ".xlsx", ".odt", ".rtf", ".txt", ".md",
+		".html", ".epub", ".pdf", ".tex", ".rst", ".json", ".csv", ".tsv", ".xml",
 	}
 }
 

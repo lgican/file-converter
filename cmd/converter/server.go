@@ -858,7 +858,7 @@ func handleBankConvert(store *sessionStore, limiter *rateLimiter, hmacKey []byte
 // handleFileConvertFormats returns the list of supported file conversion formats.
 func handleFileConvertFormats(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Cache-Control", "public, max-age=3600")
+	w.Header().Set("Cache-Control", "no-cache")
 
 	formats := fileconvertformat.GetSupportedFormats()
 	json.NewEncoder(w).Encode(formats)

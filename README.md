@@ -49,11 +49,15 @@ in memory with no temp files written to disk.
 
 From the project root, start the web server on port 8080:
 
-```powershell
-Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }; Start-Sleep -Seconds 1; $env:Path += ";C:\Program Files\Go\bin"; cd C:\Users\student\git\converter\converter; go run ./cmd/converter serve
+```bash
+go run ./cmd/converter serve
 ```
 
 Then open [http://localhost:8080](http://localhost:8080) in your browser.
+
+> **Troubleshooting:** If port 8080 is already in use, stop the existing
+> process first or choose a different port. If `go` is not found, ensure
+> Go is in your system PATH.
 
 ### Build
 
@@ -70,7 +74,10 @@ make clean    # Remove bin/ and build artifacts
 
 ```
 converter
-├── bin/                 Bundled tools: magick, ffmpeg, pandoc (gitignored)
+├── bin/                 Bundled tool directories (committed to repo)
+│   ├── ffmpeg/          FFmpeg executable + shared libraries
+│   ├── imagemagick/     ImageMagick executable + DLLs
+│   └── pandoc/          Pandoc executable
 ├── cmd/converter/       Web server entry point
 ├── cmd/inspect/         Low-level TNEF diagnostic tool
 ├── deploy/              Seccomp profile + deployment configs
